@@ -32,35 +32,6 @@
 - 炫酷hover特效
 
 
-## Preview 效果图
-
-#### 自适应布局
-
-![自适应布局](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/index.gif)
-
-#### 多TAB效果
-
-![自适应布局](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/tab.gif)
-
-#### 丰富功能表格
-
-![丰富功能表格](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/table.gif)
-
-#### 炫酷登录界面
-
-![炫酷登录界面](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/login.gif)
-
-#### 炫酷图表
-
-![炫酷图表](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/echart.gif)
-
-
-#### 编辑器
-
-![丰富功能表格](https://github.com/herozhou/JAVA-HTML-/blob/master/src/gifs/editor.gif)
-
-
-
 **[更多demo](http://herozhou.coding.me/vue-framework-wz/#/dashboard)**
 
 
