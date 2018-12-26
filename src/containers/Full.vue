@@ -2,7 +2,7 @@
   <div class="app">
     <AppHeader/>
     <div class="app-body">
-      <!--<Sidebar/>-->
+      <Sidebar/>
       <main class="main">
         <!--<breadcrumb :list="list"/>-->
         <div class="container-fluid">
