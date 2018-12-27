@@ -30,7 +30,7 @@
                     <div class="title">
                         <div class="titleLeft">
                             <span style="font-size: 20px">工单信息</span>
-                            <span style="font-size: 50px">工单数：{{cont}}</span>
+                            <span>工单数：{{cont}}</span>
                         </div>
                         <div class="titleRight">
                             <RadioGroup v-model="searchLabel" type="button">
@@ -64,7 +64,7 @@
       name: 'dashboard',
       data () {
         return {
-          cont: 0,
+          cont: 10,
           searchLabel: '',
           columns1: [
             {
