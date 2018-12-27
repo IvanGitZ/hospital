@@ -30,7 +30,7 @@
                     <div class="title">
                         <div class="titleLeft">
                             <span style="font-size: 20px">工单信息</span>
-                            <span>工单数：7</span>
+                            <span style="font-size: 50px">工单数：{{cont}}</span>
                         </div>
                         <div class="titleRight">
                             <RadioGroup v-model="searchLabel" type="button">
@@ -64,6 +64,7 @@
       name: 'dashboard',
       data () {
         return {
+          cont: 0,
           searchLabel: '',
           columns1: [
             {
@@ -110,7 +111,15 @@
         }
       },
       created() {
-
+          // const self = this
+          // const ws = new WebSocket('ws://localhost:9000')
+          // ws.onopen = function() {  console.log("open")
+          //     ws.send("hello");
+          // }
+          // ws.onmessage = function(evt) {
+          //     self.cont = evt.data
+          //     console.log('websocket onmessage', evt.data)
+          // }
       },
       mounted() {
 
