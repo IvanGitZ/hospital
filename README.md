@@ -1,32 +1,16 @@
 # vue-framework-wz #
 
+## 框架搭建
+```
+    author  : `Ivan`,
+    email:`562281476@qq.com`,
+    本模板基于[vue-framework-wz](https://github.com/herozhou/vue-framework-wz.git)，
+```
 
-[![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg)]() [![npm](https://img.shields.io/npm/dw/localeval.svg)]() [![npm](https://img.shields.io/npm/v/npm.svg)]() [![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg)]()[![Sourcegraph for Repo Reference Count](https://img.shields.io/sourcegraph/rrc//github.com/gorilla/mux.svg)]()[![GitHub watchers](https://img.shields.io/github/watchers/badges/shields.svg?style=social&label=Watch)]()
-
-**[立即体验(国内)](http://herozhou.coding.me/vue-framework-wz/#/dashboard)**
-
-**[online-website](https://herozhou.github.io/vue-framework-wz/)**
-
-**[Englist Document](https://github.com/herozhou/vue-framework-wz/wiki/English-Document)**
-
-**本项目是后台管理框架，集成了权限管理、登录功能、UI组件、七牛上传等功能，建议直接使用。**
-> **注意**：便于前端调试，所以数据请求都是用了mockjs模拟。**在需要请求外部api时请移除mock文件**。
-
-**[更多demo](http://herozhou.coding.me/vue-framework-wz/#/dashboard)**
-
-
-## 系列教程
-
-[《一步步带你做vue后台管理框架》第一课：介绍框架](http://www.cnblogs.com/herozhou/p/7434931.html)
-
-[《一步步带你做vue后台管理框架》第二课：上手使用](http://www.cnblogs.com/herozhou/p/7441702.html)
-
-[《一步步带你做vue后台管理框架》第三课：登录功能](http://www.cnblogs.com/herozhou/p/7469667.html)
-
-## Run 开发 
+## 开发
 ```bash
     # 克隆项目
-    git clone https://github.com/herozhou/vue-framework-wz.git
+    git clone https://github.com/IvanGitZ/hospital.git
 
     # 安装依赖
     npm install
@@ -41,10 +25,16 @@
 ```
 浏览器访问 http://localhost:9001
 
-## wz脚手架
+## Build 发布
+```bash
+    # 发布测试环境 带webpack ananalyzer
+    npm run build:sit-preview
 
-> 为了便于大家使用和精简体积 故开发了基于node的命令行构建工具，可安装/删除插件，比如你所开发的项目无需Tinymce插件就
-```wz remove -p Tinymce ```删除Tinymce 。需要请求外部API就 执行``` wz remove -p Mockjs```，并根据提示修改相应的api地址
+    # 构建生成环境
+    npm run build:prod
+```
+
+## wz脚手架
 
 **请在项目初期对结构改动不大时使用cli**
 
@@ -57,19 +47,11 @@
     wz remove -p Mockjs  //卸载Mock.js插件
     wz  -h 查看命令帮助
 ```
+> 为了便于大家使用和精简体积 故开发了基于node的命令行构建工具，可安装/删除插件，比如你所开发的项目无需Tinymce插件就
+```wz remove -p Tinymce ```删除Tinymce 。需要请求外部API就 执行``` wz remove -p Mockjs```，并根据提示修改相应的api地址
+
 当前可卸载的插件有 Tinymce|Markdown|Mockjs|Jsontree
 不久会支持卸载更多插件，便于开发精简体积
-
-## Build 发布
-```bash
-    # 发布测试环境 带webpack ananalyzer
-    npm run build:sit-preview
-
-    # 构建生成环境
-    npm run build:prod
-```
-
-
 
 ## FileTree 目录结构
 ```shell
@@ -105,28 +87,24 @@
 
 ```
 
+**[立即体验(国内)](http://herozhou.coding.me/vue-framework-wz/#/dashboard)**
 
-## About me 关于作者
+**[online-website](https://herozhou.github.io/vue-framework-wz/)**
 
-```javascript
-  const herozhou = {
-    blogName  : `herozhou工巧`,
-    blog : `https://www.cnblogs.com/herozhou`,
-    email:`Zhouhero@hotmail.com`,
-    School:`NCHU",
-    Grade:`Junior`
-  }
-  //有任何问题请提issues或直接联系我
- //正在开发一系列帮助新手学习前端的项目，旨在和大家一起成为大前端工程师，有意请follow 我，一起加油💪
-```
+**[Englist Document](https://github.com/herozhou/vue-framework-wz/wiki/English-Document)**
+
+**本项目是后台管理框架，集成了权限管理、登录功能、UI组件、七牛上传等功能，建议直接使用。**
+> **注意**：便于前端调试，所以数据请求都是用了mockjs模拟。**在需要请求外部api时请移除mock文件**。
+
+**[更多demo](http://herozhou.coding.me/vue-framework-wz/#/dashboard)**
 
 
-## Thanks 感激
-感谢以下的项目,排名不分先后
+## 系列教程
 
-* [iView](http://mouapp.com/) 
-* [jquery](http://jquery.com)
+[《一步步带你做vue后台管理框架》第一课：介绍框架](http://www.cnblogs.com/herozhou/p/7434931.html)
 
-## License
+[《一步步带你做vue后台管理框架》第二课：上手使用](http://www.cnblogs.com/herozhou/p/7441702.html)
+
+[《一步步带你做vue后台管理框架》第三课：登录功能](http://www.cnblogs.com/herozhou/p/7469667.html)
 
 MIT
