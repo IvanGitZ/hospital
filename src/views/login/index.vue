@@ -3,8 +3,8 @@
     <div id="canvascontainer" ref='can'></div>
 
     <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
-        <Form-item prop="email">
-            <Input type="text" v-model="loginForm.email" placeholder="Username" autoComplete="on">
+        <Form-item prop="username">
+            <Input type="text" v-model="loginForm.username" placeholder="Username" autoComplete="on">
                 <Icon type="ios-person-outline" slot="prepend" ></Icon>
             </Input>
         </Form-item>
@@ -45,7 +45,7 @@
         };
         return {
           loginForm: {
-            email: 'admin@wz.com',
+            username: 'admin',
             password: ''
           },
           loginRules: {
@@ -97,12 +97,12 @@
           this.$refs.loginForm.validate(valid => {
             if (valid) {
               this.loading = true;
-              this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
+              this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
                 this.$Message.success('登录成功');
-
                 this.loading = false;
                 this.$router.push({ path: '/' });
               }).catch(err => {
+                console.log('登陆失败', err)
                 this.$message.error(err);
                 this.loading = false;
               });

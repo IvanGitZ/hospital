@@ -1,4 +1,4 @@
-import { loginByEmail, logout, getInfo } from 'api/login';
+import { LoginByUsername, loginByEmail, logout, getInfo } from 'api/login';
 import Cookies from 'js-cookie';
 
 const user = {
@@ -78,8 +78,19 @@ const user = {
         });
       });
     },
-
-
+    // 用户名登录
+    LoginByUsername ({ commit }, userInfo) {
+      return new Promise((resolve, reject) => {
+        LoginByUsername(userInfo.username, userInfo.password).then(response => {
+          console.log(response.data)
+          Cookies.set('Admin-Token', userInfo.username)
+          commit('SET_TOKEN', userInfo.username)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {

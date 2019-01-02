@@ -112,13 +112,13 @@
       }
     },
     created() {
-      request({
-        url: 'api/login',
-        method: 'post',
-        params: { username: 'admin', password: '123456' }
-      }).then(function(res){
-        console.log('返回值', res)
-      })
+      // request({
+      //   url: 'api/login',
+      //   method: 'post',
+      //   params: { username: 'admin', password: '123456' }
+      // }).then(function(res){
+      //   console.log('返回值', res)
+      // })
         // const self = this
         // const ws = new WebSocket("ws://aid.jdaoyun.com/ws")
         // ws.onopen = function() {
