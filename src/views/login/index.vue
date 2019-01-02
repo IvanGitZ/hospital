@@ -29,13 +29,13 @@
     export default {
       name: 'login',
       data() {
-        const validateEmail = (rule, value, callback) => {
-          if (!isWscnEmail(value)) {
-            callback(new Error('请输入正确的合法邮箱'));
-          } else {
-            callback();
-          }
-        };
+        // const validateEmail = (rule, value, callback) => {
+        //   if (!isWscnEmail(value)) {
+        //     callback(new Error('请输入正确的合法邮箱'));
+        //   } else {
+        //     callback();
+        //   }
+        // };
         const validatePass = (rule, value, callback) => {
           if (value.length < 6) {
             callback(new Error('密码不能小于6位'));
@@ -49,9 +49,9 @@
             password: ''
           },
           loginRules: {
-            email: [
-                { required: true, trigger: 'blur', validator: validateEmail }
-            ],
+            // email: [
+            //     { required: true, trigger: 'blur', validator: validateEmail }
+            // ],
             password: [
                 { required: true, trigger: 'blur', validator: validatePass }
             ]
@@ -60,56 +60,37 @@
           showDialog: false
         }
       },
-       mounted () {
+      mounted () {
         container = document.createElement( 'div' );
-   this.$refs.can.appendChild( container );  
-
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-  camera.position.z = 1000;
-
-  scene = new THREE.Scene();
-
-  particles = new Array();
-
-  var PI2 = Math.PI * 2;
-  var material = new THREE.ParticleCanvasMaterial( {
-
-    color: 0x0078de,
-    program: function ( context ) {
-
-      context.beginPath();
-      context.arc( 0, 0, 1, 0, PI2, true );
-      context.fill();
-
-    }
-
-  } );
-
-  var i = 0;
-
-  for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
-
-    for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
-
-      particle = particles[ i ++ ] = new THREE.Particle( material );
-      particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
-      particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
-      scene.add( particle );
-
-    }
-
-  }
-
-  renderer = new THREE.CanvasRenderer();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  container.appendChild( renderer.domElement );
-
-  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  //
-
-  window.addEventListener( 'resize', onWindowResize, false );
-
-animate();
+        this.$refs.can.appendChild( container );
+        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.z = 1000;
+        scene = new THREE.Scene();
+        particles = new Array();
+        var PI2 = Math.PI * 2;
+        var material = new THREE.ParticleCanvasMaterial( {
+          color: 0x0078de,
+          program: function ( context ) {
+            context.beginPath();
+            context.arc( 0, 0, 1, 0, PI2, true );
+            context.fill();
+          }
+        });
+        var i = 0;
+        for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+          for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+            particle = particles[ i ++ ] = new THREE.Particle( material );
+            particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+            particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+            scene.add( particle );
+          }
+        }
+        renderer = new THREE.CanvasRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        container.appendChild( renderer.domElement );
+        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+        window.addEventListener( 'resize', onWindowResize, false );
+        animate();
        },
       methods: {
         handleLogin() {
@@ -118,7 +99,7 @@ animate();
               this.loading = true;
               this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
                 this.$Message.success('登录成功');
-                
+
                 this.loading = false;
                 this.$router.push({ path: '/' });
               }).catch(err => {
