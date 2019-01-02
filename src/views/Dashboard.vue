@@ -60,75 +60,83 @@
     </div>
 </template>
 <script>
-    export default {
-      name: 'dashboard',
-      data () {
-        return {
-          cont: 10,
-          searchLabel: '',
-          columns1: [
-            {
-              title: '站点名称',
-              key: 'name'
-            },
-            {
-              title: '车牌号',
-              key: 'age'
-            },
-            {
-              title: '司机',
-              key: 'address'
-            }
-          ],
-          columns2: [
-            {
-              title: '工单名称',
-              key: 'name'
-            },
-            {
-              title: '工单类型',
-              key: 'age'
-            },
-            {
-              title: '地址',
-              key: 'address'
-            }
-          ],
-          data1: [
-            {
-              name: 'John Brown',
-              age: 18,
-              address: 'New York No. 1 Lake Park',
-              date: '2016-10-03'
-            },
-            {
-              name: 'Jim Green',
-              age: 24,
-              address: 'London No. 1 Lake Park',
-              date: '2016-10-01'
-            }
-          ]
-        }
-      },
-      created() {
-          // const self = this
-          // const ws = new WebSocket("ws://aid.jdaoyun.com/ws")
-          // ws.onopen = function() {
-          //     console.log("open")
-          //     ws.send("hello");
-          // }
-          // ws.onmessage = function(evt) {
-          //     self.cont = evt.data
-          //     console.log('websocket onmessage', evt.data)
-          // }
-      },
-      mounted() {
-
-      },
-      methods: {
-
+  import request from 'utils/fetch';
+  export default {
+    name: 'dashboard',
+    data () {
+      return {
+        cont: 10,
+        searchLabel: '',
+        columns1: [
+          {
+            title: '站点名称',
+            key: 'name'
+          },
+          {
+            title: '车牌号',
+            key: 'age'
+          },
+          {
+            title: '司机',
+            key: 'address'
+          }
+        ],
+        columns2: [
+          {
+            title: '工单名称',
+            key: 'name'
+          },
+          {
+            title: '工单类型',
+            key: 'age'
+          },
+          {
+            title: '地址',
+            key: 'address'
+          }
+        ],
+        data1: [
+          {
+            name: 'John Brown',
+            age: 18,
+            address: 'New York No. 1 Lake Park',
+            date: '2016-10-03'
+          },
+          {
+            name: 'Jim Green',
+            age: 24,
+            address: 'London No. 1 Lake Park',
+            date: '2016-10-01'
+          }
+        ]
       }
+    },
+    created() {
+      request({
+        url: 'api/login',
+        method: 'post',
+        params: { username: 'admin', password: '123456' }
+      }).then(function(res){
+        console.log('返回值', res)
+      })
+        // const self = this
+        // const ws = new WebSocket("ws://aid.jdaoyun.com/ws")
+        // ws.onopen = function() {
+        //     console.log("open")
+        //     ws.send("hello");
+        // }
+        // ws.onmessage = function(evt) {
+        //     self.cont = evt.data
+        //     console.log('websocket onmessage', evt.data)
+        // }
+    },
+    mounted() {
+
+    },
+    methods: {
+
     }
+  }
 </script>
 <style scoped>
     .title {
