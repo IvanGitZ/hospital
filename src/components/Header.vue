@@ -24,7 +24,7 @@
       </li>
       <li class="nav-item header-item">
         <Dropdown>
-          <router-link tag="div" to='/jsontree'  style="height:55px;" class="nav-link">
+          <router-link tag="div" to='/components/form'  style="height:55px;" class="nav-link">
                 <p><Icon type="compose" size='30' color="#2d8cf0"></Icon></p>
                 <p  style="color:white"> 手动建单 </p>
           </router-link>
