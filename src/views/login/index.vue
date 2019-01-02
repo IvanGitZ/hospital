@@ -103,7 +103,7 @@
                 this.$router.push({ path: '/' });
               }).catch(err => {
                 console.log('登陆失败', err)
-                this.$message.error(err);
+                this.$Message.error(err);
                 this.loading = false;
               });
             } else {

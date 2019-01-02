@@ -82,10 +82,14 @@ const user = {
     LoginByUsername ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginByUsername(userInfo.username, userInfo.password).then(response => {
+          if (response.data.flag) {
+            Cookies.set('Admin-Token', userInfo.username)
+            commit('SET_TOKEN', userInfo.username)
+            resolve()
+          } else {
+            reject(response.data.msg)
+          }
           console.log(response.data)
-          Cookies.set('Admin-Token', userInfo.username)
-          commit('SET_TOKEN', userInfo.username)
-          resolve()
         }).catch(error => {
           reject(error)
         })
