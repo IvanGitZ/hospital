@@ -124,9 +124,9 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-    .navbar-brand {
-        border-bottom: 0!important;
-    }
+  .navbar-brand {
+      border-bottom: 0!important;
+  }
   .dropdown-itemp{
     text-align: left;
     font-size: 15px;
