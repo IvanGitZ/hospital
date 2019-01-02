@@ -1,7 +1,9 @@
 <template>
   <navbar>
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
-    <a class="navbar-brand" ></a>
+    <router-link to='/'>
+        <a class="navbar-brand" ></a>
+    </router-link>
     <!--<ul class="nav navbar-nav d-md-down-none">-->
       <!--<li class="nav-item">-->
         <!--<a class="nav-link navbar-toggler sidebar-toggler"  @click="sidebarMinimize">&#9776;</a>-->
@@ -9,20 +11,20 @@
     <!--</ul>-->
     <ul class="nav navbar-nav d-md-down-none">
        <li class="nav-item header-item">
-          <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
+          <router-link tag="div" to='/introduction'  style="height:55px;" class="nav-link">
             <p><Icon type="android-pin" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 地图管理 </p>
         </router-link> 
       </li>
       <li class="nav-item header-item">
-        <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
+        <router-link tag="div" to='/charts'  style="height:55px;" class="nav-link">
             <p><Icon type="social-whatsapp" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 来电显示 </p>
         </router-link>
       </li>
       <li class="nav-item header-item">
         <Dropdown>
-          <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
+          <router-link tag="div" to='/jsontree'  style="height:55px;" class="nav-link">
                 <p><Icon type="compose" size='30' color="#2d8cf0"></Icon></p>
                 <p  style="color:white"> 手动建单 </p>
           </router-link>
@@ -36,7 +38,7 @@
         </Dropdown>
       </li>
       <li class="nav-item header-item">
-         <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
+         <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
             <p><Icon type="gear-b" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 设置 </p>
         </router-link>
@@ -122,6 +124,9 @@ export default {
 </script>
 
 <style type="text/css" scoped>
+    .navbar-brand {
+        border-bottom: 0!important;
+    }
   .dropdown-itemp{
     text-align: left;
     font-size: 15px;

@@ -112,8 +112,9 @@
       },
       created() {
           // const self = this
-          // const ws = new WebSocket('ws://localhost:9000')
-          // ws.onopen = function() {  console.log("open")
+          // const ws = new WebSocket("ws://aid.jdaoyun.com/ws")
+          // ws.onopen = function() {
+          //     console.log("open")
           //     ws.send("hello");
           // }
           // ws.onmessage = function(evt) {
