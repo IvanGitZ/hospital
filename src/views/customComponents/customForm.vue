@@ -1,62 +1,205 @@
 <template>
   <div id="customForm">
-    <Form :model="formItem" :label-width="80">
-      <FormItem label="Input">
-        <Input v-model="formItem.input" placeholder="Enter something..."></Input>
-      </FormItem>
-      <FormItem label="Select">
-        <Select v-model="formItem.select">
-          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
-        </Select>
-      </FormItem>
-      <FormItem label="DatePicker">
-        <Row>item.value
-          <Col span="11">
-            <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
+    <Card shadow>
+      <p slot="title">受理描述</p>
+      <Form :model="formItem" :label-width="60">
+        <!-- 第一行 -->
+        <Row :gutter="10">
+          <Col span="6">
+          <FormItem label="工单来源">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
           </Col>
-          <Col span="2" style="text-align: center">-</Col>
-          <Col span="11">
-            <TimePicker type="time" placeholder="Select time" v-model="formItem.time"></TimePicker>
+          <Col span="6">
+          <FormItem label="呼救类型">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem label="事故类型">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem label="事故等级">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
           </Col>
         </Row>
-      </FormItem>
-      <FormItem label="Radio">
-        <RadioGroup v-model="formItem.radio">
-          <Radio label="male">Male</Radio>
-          <Radio label="female">Female</Radio>
-        </RadioGroup>
-      </FormItem>
-      <FormItem label="Checkbox">
-        <CheckboxGroup v-model="formItem.checkbox">
-          <Checkbox label="Eat"></Checkbox>
-          <Checkbox label="Sleep"></Checkbox>
-          <Checkbox label="Run"></Checkbox>
-          <Checkbox label="Movie"></Checkbox>
-        </CheckboxGroup>
-      </FormItem>
-      <FormItem label="Switch">
-        <i-switch v-model="formItem.switch" size="large">
-          <span slot="open">On</span>
-          <span slot="close">Off</span>
-        </i-switch>
-      </FormItem>
-      <FormItem label="Slider">
-        <Slider v-model="formItem.slider" range></Slider>
-      </FormItem>
-      <FormItem label="Text">
-        <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-      </FormItem>
-      <FormItem>
-        <Button type="primary">Submit</Button>
-        <Button style="margin-left: 8px">Cancel</Button>
-      </FormItem>
-    </Form>
+        <Row :gutter="10">
+          <Col span="16">
+          <FormItem label="现场地址">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="8">
+          <FormItem label="区域">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="10">
+          <Col span="16">
+          <FormItem label="接车地址">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="8">
+          <FormItem label="患者人数">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="10">
+          <Col span="12">
+          <FormItem label="送往地点">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem label="主诉">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem label="病情">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="10">
+          <Col span="5">
+          <FormItem label="患者姓名">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="4">
+          <FormItem label="性别">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+          <Col span="5">
+          <FormItem label="年龄">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="5">
+          <FormItem label="民族">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+          <Col span="5">
+          <FormItem label="国籍">
+            <Select v-model="formItem.select">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+            </Select>
+          </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="10">
+          <Col span="6">
+          <FormItem label="主叫号码">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="5">
+          <FormItem label="联系人">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem label="联系电话">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="5">
+          <FormItem label="分机号">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="10">
+          <Col span="12">
+          <FormItem label="特殊要求">
+            <Input v-model="formItem.input" placeholder="请输入"></Input>
+          </FormItem>
+          </Col>
+          <Col span="6">
+          <FormItem>
+            <Checkbox v-model="formItem.input" label="需要担架">需要担架</Checkbox>
+          </FormItem>
+          </Col>
+        </Row>
+        <FormItem label="备注">
+          <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入"></Input>
+        </FormItem>
+      </Form>
+      <div class="top" style="margin-bottom: 10px">
+        <div class="title">
+          <span style="float: left;font-size: 20px">车辆：22</span>
+          <div class="titleRight">
+            <RadioGroup v-model="carSearch" @on-change="getCarList" type="button">
+              <Radio label="">全部</Radio>
+              <Radio label="0">待命</Radio>
+              <Radio label="1">任务中</Radio>
+              <Radio label="2">暂停</Radio>
+              <Radio label="3">下班</Radio>
+              <Radio  style="background-color: #2d8cf0;color: white;" label="">刷新</Radio>
+            </RadioGroup>
+          </div>
+        </div>
+        <Table style="margin-bottom: 10px" @on-select="carSelectColumn" :columns="carColumns" :data="carData"></Table>
+        <ButtonGroup>
+          <Button v-for="item in carBtnArr" @click="carClick(item.key)" :key="item.key">{{item.title}}</Button>
+        </ButtonGroup>
+      </div>
+    </Card>
+    <!-- 表格 -->
   </div>
 </template>
 <script>
+  import request from 'utils/fetch'
   export default {
     data () {
       return {
+        // 车辆
+        carSearch: '',
+        carSelectArr: [],
+        carColumns: [
+          { title: '站点名称', key: 'siteName', type: 'selection' },
+          { title: '车牌号', key: 'number' },
+          { title: '司机', key: 'driverName'},
+          { title: '医生', key: 'doctorName' },
+          { title: '护士', key: 'nurseName' },
+          { title: '状态', key: 'state'},
+          { title: '按键时间', key: 'siteName' },
+          { title: '车况', key: 'vehicles' },
+          { title: '随车电话', key: 'phone'},
+          { title: '任务号', key: 'orderNo' },
+          { title: '车型', key: 'model'}
+        ],
+        carBtnArr: [
+          { title: '电话记录', key: '电话记录' },
+          { title: '转电话', key: '转电话' },
+          { title: '继续接听', key: '继续接听'},
+          { title: '代派', key: '代派' },
+          { title: '派车', key: '派车' }
+        ],
+        carData: [],
         cityList: [
           {
             value: 'New York',
@@ -95,13 +238,50 @@
           textarea: ''
         }
       }
+    },
+    created() {
+      this.getCarList()
+    },
+    methods: {
+      // 车辆
+      getCarList(value) {
+        const self = this
+        request({
+          url: 'api/queryCarList',
+          method: 'get',
+          params: { state: value }
+        }).then(function(res){
+          console.log('车辆信息返回值', res.data)
+          self.carData = res.data.josnObj.data
+        })
+      },
+      carSelectColumn(selection, row) {
+        console.log(selection, row)
+        const self = this
+        self.carSelectArr = _.cloneDeep(selection)
+      },
+      carClick(data) {
+        const self = this
+        console.log('carClick', data, self.carSelectArr)
+      }
     }
   }
 </script>
 <style scoped>
   #customForm {
-    width: 800px;
-    margin: 20px auto;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .title {
+    /*padding-bottom: 10px;*/
+    overflow: hidden;
+  }
+  .titleLeft {
+    float: left;
+    overflow: hidden;
+  }
+  .titleRight {
+    float: right;
   }
 </style>
 
