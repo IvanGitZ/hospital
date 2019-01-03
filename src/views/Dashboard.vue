@@ -44,15 +44,17 @@
                 </div>
             </TabPane>
             <TabPane label="受理信息" name="name2">
-                <Table :columns="orderColumns" :data="carData"></Table>
+              <customForm></customForm>
             </TabPane>
         </Tabs>
     </div>
 </template>
 <script>
+  import customForm from '@/views/customComponents/customForm'
   import request from 'utils/fetch';
   export default {
     name: 'dashboard',
+    components: { customForm },
     data () {
       return {
         cont: 10,

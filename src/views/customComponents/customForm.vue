@@ -174,6 +174,8 @@
 <script>
   import request from 'utils/fetch'
   export default {
+    name: 'customForm',
+    components: {},
     data () {
       return {
         // 车辆

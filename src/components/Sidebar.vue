@@ -43,11 +43,7 @@
             <p slot="title">
                 坐席状态
             </p>
-            <div>
-                <p><span>一号台 </span> 就绪</p>
-                <p><span>二号台 </span> 离席</p>
-                <p><span>三号台 </span> 受理</p>
-            </div>
+            <Table :columns="telStateColumns" :data="telStateData"></Table>
         </Card>
         <Card class="sidebarCard">
             <p slot="title">
@@ -65,9 +61,18 @@
 <script>
     export default {
       name: 'sidebar',
+      components: {},
       data () {
         return {
-
+          telStateColumns: [
+            { title: '座席', key: 'tel' },
+            { title: '状态', key: 'state' }
+          ],
+          telStateData: [
+            { tel: '一号台', state: '就绪'},
+            { tel: '二号台', state: '离席' },
+            { tel: '三号台', state: '受理' }
+          ]
         }
       }
     }
@@ -79,4 +84,6 @@
     .sidebarCard {
         border-radius: 0;
     }
+</style>
+<style>
 </style>
