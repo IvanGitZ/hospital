@@ -7,28 +7,28 @@
         <Row :gutter="10">
           <Col span="6">
           <FormItem label="工单来源">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.source">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="呼救类型">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.distress_types">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="事故类型">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.accident_types">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="事故等级">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.accident_level">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
@@ -37,41 +37,41 @@
         <Row :gutter="10">
           <Col span="16">
           <FormItem label="现场地址">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.address_scene" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="8">
           <FormItem label="区域">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.address_area" placeholder="请输入"></Input>
           </FormItem>
           </Col>
         </Row>
         <Row :gutter="10">
           <Col span="16">
           <FormItem label="接车地址">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.address_destination" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="8">
           <FormItem label="患者人数">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.patients" placeholder="请输入"></Input>
           </FormItem>
           </Col>
         </Row>
         <Row :gutter="10">
           <Col span="12">
           <FormItem label="送往地点">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.address_send" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="主诉">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.cc" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="病情">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.illness">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
@@ -80,31 +80,31 @@
         <Row :gutter="10">
           <Col span="5">
           <FormItem label="患者姓名">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.patientName" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="4">
           <FormItem label="性别">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.sex">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="年龄">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.age" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="民族">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.national">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="国籍">
-            <Select v-model="formItem.select">
+            <Select v-model="formItem.nationality">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
@@ -113,39 +113,39 @@
         <Row :gutter="10">
           <Col span="6">
           <FormItem label="主叫号码">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.calling_phone" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="联系人">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.name" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="联系电话">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.phone" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="分机号">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.extension" placeholder="请输入"></Input>
           </FormItem>
           </Col>
         </Row>
         <Row :gutter="10">
           <Col span="12">
           <FormItem label="特殊要求">
-            <Input v-model="formItem.input" placeholder="请输入"></Input>
+            <Input v-model="formItem.requirements" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem>
-            <Checkbox v-model="formItem.input" label="需要担架">需要担架</Checkbox>
+            <Checkbox v-model="formItem.stretcher" label="需要担架">需要担架</Checkbox>
           </FormItem>
           </Col>
         </Row>
         <FormItem label="备注">
-          <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入"></Input>
+          <Input v-model="formItem.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入"></Input>
         </FormItem>
       </Form>
       <div class="top" style="margin-bottom: 10px">
@@ -229,15 +229,29 @@
           }
         ],
         formItem: {
-          input: '',
-          select: '',
-          radio: 'male',
-          checkbox: [],
-          switch: true,
-          date: '',
-          time: '',
-          slider: [20, 50],
-          textarea: ''
+          source: '',
+          distress_types: '',
+          accident_types: '',
+          accident_level: '',
+          address_scene: '',
+          address_area: '',
+          address_destination: '',
+          patients: '',
+          address_send: '',
+          cc: '',
+          illness: '',
+          patientName: '',
+          sex: '',
+          age: '',
+          national: '',
+          nationality: '',
+          calling_phone: '',
+          name: '',
+          phone: '',
+          extension: '',
+          requirements: '',
+          stretcher: '',
+          remark: ''
         }
       }
     },
