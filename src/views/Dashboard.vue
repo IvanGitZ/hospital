@@ -115,7 +115,7 @@
       request({
         url: 'api/queryCarList',
         method: 'get',
-        params: { state: '0' }
+        params: {}
       }).then(function(res){
         console.log('返回值', res.data)
       })

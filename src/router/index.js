@@ -48,6 +48,13 @@ export const asyncRouterMap = [
     children: [
       { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
       { path: '/introduction', name: '介绍', icon: 'thumbsup', component: _import('Introduction') },
+      { path: '/custom',
+        name: 'custom',
+        redirect: '/custom/customForm',
+        icon: 'bookmark',
+        component: { render (c) { return c('router-view') } },
+        children: [{ path: 'customForm', name: 'customForm', icon: 'ios-list-outline', component: _import('customComponents/customForm'), hidden: false }]
+      },
       { path: '/components',
         name: 'component组件',
         redirect: '/components/buttons',
