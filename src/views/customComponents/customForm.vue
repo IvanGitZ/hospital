@@ -268,7 +268,7 @@
           params: { state: value }
         }).then(function(res){
           console.log('车辆信息返回值', res.data)
-          self.carData = res.data.josnObj.data
+          self.carData = res.data.data.data
         })
       },
       carSelectColumn(selection, row) {

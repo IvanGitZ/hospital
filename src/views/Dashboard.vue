@@ -137,7 +137,7 @@
           params: { state: value }
         }).then(function(res){
           console.log('车辆信息返回值', res.data)
-          self.carData = res.data.josnObj.data
+          self.carData = res.data.data.data
         })
       },
       carSelectColumn(selection, row) {
@@ -158,7 +158,7 @@
           params: { state: value }
         }).then(function(res){
           console.log('工单返回值', res.data)
-          self.orderData = res.data.josnObj.data
+          self.orderData = res.data.data.data
         })
       },
       orderSelectColumn(selection, row) {
