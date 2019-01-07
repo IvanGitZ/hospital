@@ -75,15 +75,15 @@
           { title: '车型', key: 'model'}
         ],
         carBtnArr: [
-          { title: '收到指令', key: '收到指令' },
-          { title: '驶向现场', key: '驶向现场' },
-          { title: '抢救转送', key: '抢救转送'},
-          { title: '途中待命', key: '途中待命' },
-          { title: '站内待命', key: '站内待命' },
-          { title: '中止任务', key: '中止任务'},
-          { title: '暂停调用', key: '暂停调用' },
-          { title: '恢复调用', key: '恢复调用' },
-          { title: '上下班', key: '上下班'}
+          { title: '收到指令', key: '0' },
+          { title: '驶向现场', key: '1' },
+          { title: '抢救转送', key: '2'},
+          { title: '途中待命', key: '3' },
+          { title: '站内待命', key: '4' },
+          { title: '中止任务', key: '5'},
+          { title: '暂停调用', key: '6' },
+          { title: '恢复调用', key: '7' },
+          { title: '上下班', key: 'change'}
         ],
         carData: [],
         // 工单
@@ -138,6 +138,18 @@
         }).then(function(res){
           console.log('车辆信息返回值', res.data)
           self.carData = res.data.data.data
+          _.each(self.carData, function(item) {
+            switch (item.state) {
+              case '0': item.state = '待命'
+                break;
+              case '1': item.state = '任务中'
+                break;
+              case '2': item.state = '暂停'
+                break;
+              case '3': item.state = '下班'
+                break;
+            }
+          })
         })
       },
       carSelectColumn(selection, row) {
@@ -148,6 +160,21 @@
       carClick(data) {
         const self = this
         console.log('carClick', data, self.carSelectArr)
+        if (data === 'change') {
+          // 上下班
+        } else {
+          _.each(self.carSelectArr, function(item) {
+            request({
+              url: 'api/editCar',
+              method: 'post',
+              params: { id: item.id, state: data }
+            }).then(function(res) {
+              console.log('修改车辆信息', res)
+              self.getCarList()
+            })
+          })
+        }
+
       },
       // 工单
       getOrderList(value) {
