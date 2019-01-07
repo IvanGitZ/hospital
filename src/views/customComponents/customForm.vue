@@ -86,7 +86,7 @@
           <Col span="4">
           <FormItem label="性别">
             <Select v-model="formItem.sex">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in sexList" :value="item.value" :key="item.value">{{item.label}}</Option>
             </Select>
           </FormItem>
           </Col>
@@ -203,33 +203,17 @@
           { title: '转电话', key: '转电话' },
           { title: '继续接听', key: '继续接听'},
           { title: '代派', key: '代派' },
-          { title: '派车', key: '派车' }
+          { title: '派车', key: 'toSubmit' }
         ],
         carData: [],
-        cityList: [
+        sexList: [
           {
-            value: 'New York',
-            label: 'New York'
+            value: 'male',
+            label: '男'
           },
           {
-            value: 'London',
-            label: 'London'
-          },
-          {
-            value: 'Sydney',
-            label: 'Sydney'
-          },
-          {
-            value: 'Ottawa',
-            label: 'Ottawa'
-          },
-          {
-            value: 'Paris',
-            label: 'Paris'
-          },
-          {
-            value: 'Canberra',
-            label: 'Canberra'
+            value: 'female',
+            label: '女'
           }
         ],
         source: [], // 来源
@@ -262,7 +246,8 @@
           extension: '',
           requirements: '',
           stretcher: '',
-          remark: ''
+          remark: '',
+          carId: ''
         }
       }
     },
@@ -316,6 +301,18 @@
         }).then(function(res){
           console.log('车辆信息返回值', res.data)
           self.carData = res.data.data.data
+          _.each(self.carData, function(item) {
+            switch (item.state) {
+              case '0': item.state = '待命'
+                break;
+              case '1': item.state = '任务中'
+                break;
+              case '2': item.state = '暂停'
+                break;
+              case '3': item.state = '下班'
+                break;
+            }
+          })
         })
       },
       carSelectColumn(selection, row) {
@@ -325,7 +322,26 @@
       },
       carClick(data) {
         const self = this
-        console.log('carClick', data, self.carSelectArr)
+        const carArr = []
+        console.log('carClick', data, self.carSelectArr, self.formItem)
+        if (data === 'toSubmit') {
+          // 派车
+          if (self.carSelectArr.length >= 0) {
+            _.each(self.carSelectArr, function(item) {
+              carArr.push(item.id)
+            })
+            self.formItem.carId = carArr.join(',')
+          } else {
+            self.formItem.carId = ''
+          }
+          request({
+            url: 'api/addOrder',
+            method: 'post',
+            params: self.formItem
+          }).then(function(res) {
+            console.log('派车成功', res)
+          })
+        }
       },
       // 拨出
       telTo() {
