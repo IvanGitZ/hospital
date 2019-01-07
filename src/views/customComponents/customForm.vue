@@ -8,28 +8,28 @@
           <Col span="6">
           <FormItem label="工单来源">
             <Select v-model="formItem.source">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in source" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="呼救类型">
             <Select v-model="formItem.distress_types">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in distress" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="事故类型">
             <Select v-model="formItem.accident_types">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in accidentTypes" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="事故等级">
             <Select v-model="formItem.accident_level">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in accident" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
@@ -72,7 +72,7 @@
           <Col span="6">
           <FormItem label="病情">
             <Select v-model="formItem.illness">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in illness" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
@@ -98,14 +98,14 @@
           <Col span="5">
           <FormItem label="民族">
             <Select v-model="formItem.national">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in ethnic" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="5">
           <FormItem label="国籍">
             <Select v-model="formItem.nationality">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+              <Option v-for="item in countries" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
@@ -228,6 +228,13 @@
             label: 'Canberra'
           }
         ],
+        source: [], // 来源
+        distress: [], // 呼救类型
+        accidentTypes: [], // 事故类型
+        accident: [], // 事故等级
+        illness: [], // 病情
+        ethnic: [], // 民族
+        countries: [], // 国籍
         formItem: {
           source: '',
           distress_types: '',
@@ -256,7 +263,43 @@
       }
     },
     created() {
+      const self = this
       this.getCarList()
+      // 工单来源下拉
+      request({url: 'api/queryDic', method: 'post', params: { type: 'source' }}).then(function(res) {
+        self.source = res.data.data
+        // console.log('工单来源', res.data.data)
+      })
+      // 呼救类型下拉
+      request({url: 'api/queryDic', method: 'post', params: { type: 'distress' }}).then(function(res) {
+        self.distress = res.data.data
+        // console.log('呼救类型', res.data.data)
+      })
+      // 事故类型accident_types
+      request({url: 'api/queryDic', method: 'post', params: { type: 'accident_types' }}).then(function(res) {
+        self.accidentTypes = res.data.data
+        // console.log('事故类型', res.data.data)
+      })
+      // 事故等级accident_types
+      request({url: 'api/queryDic', method: 'post', params: { type: 'accident' }}).then(function(res) {
+        self.accident = res.data.data
+        // console.log('事故等级', res.data.data)
+      })
+      // 病情illness
+      request({url: 'api/queryDic', method: 'post', params: { type: 'illness' }}).then(function(res) {
+        self.illness = res.data.data
+        // console.log('病情', res.data.data)
+      })
+      // 民族ethnic
+      request({url: 'api/queryDic', method: 'post', params: { type: 'ethnic' }}).then(function(res) {
+        self.ethnic = res.data.data
+        // console.log('民族', res.data.data)
+      })
+      // 国籍countries
+      request({url: 'api/queryDic', method: 'post', params: { type: 'countries' }}).then(function(res) {
+        self.countries = res.data.data
+        // console.log('国籍', res.data.data)
+      })
     },
     methods: {
       // 车辆
