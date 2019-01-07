@@ -4,7 +4,7 @@
             <TabPane label="车辆与工单" name="name1">
                 <div class="top" style="margin-bottom: 10px">
                     <div class="title">
-                        <span style="float: left;font-size: 20px">车辆：22</span>
+                        <span style="float: left;font-size: 20px">车辆：{{carTotal}}</span>
                         <div class="titleRight">
                             <RadioGroup v-model="carSearch" @on-change="getCarList" type="button">
                                 <Radio label="">全部</Radio>
@@ -25,14 +25,13 @@
                     <div class="title">
                         <div class="titleLeft">
                             <span style="font-size: 20px">工单信息</span>
-                            <span>工单数：{{cont}}</span>
+                            <span>工单数：{{orderTotal}}</span>
                         </div>
                         <div class="titleRight">
                             <RadioGroup v-model="orderSearch" @on-change="getOrderList" type="button">
                                 <Radio label="">全部</Radio>
-                                <Radio label="0">待派</Radio>
                                 <Radio label="1">进行中</Radio>
-                                <Radio label="2">挂起</Radio>
+                                <Radio label="0">挂起</Radio>
                                 <Radio  style="background-color: #2d8cf0;color: white;" label="">刷新</Radio>
                             </RadioGroup>
                         </div>
@@ -57,7 +56,6 @@
     components: { customForm },
     data () {
       return {
-        cont: 10,
         // 车辆
         carSearch: '',
         carSelectArr: [],
@@ -86,6 +84,7 @@
           { title: '上下班', key: 'change'}
         ],
         carData: [],
+        carTotal: '',
         // 工单
         orderSearch: '',
         orderColumns: [
@@ -106,7 +105,8 @@
           { title: '改派', key: '改派' },
           { title: '电话相关', key: '电话相关' }
         ],
-        orderData: []
+        orderData: [],
+        orderTotal: ''
       }
     },
     created() {
@@ -138,6 +138,7 @@
         }).then(function(res){
           console.log('车辆信息返回值', res.data)
           self.carData = res.data.data.data
+          self.carTotal = res.data.total
           _.each(self.carData, function(item) {
             switch (item.state) {
               case '0': item.state = '待命'
@@ -186,6 +187,19 @@
         }).then(function(res){
           console.log('工单返回值', res.data)
           self.orderData = res.data.data.data
+          self.orderTotal = res.data.total
+          _.each(self.orderData, function(item) {
+            switch (item.state) {
+              case '0': item.state = '挂起'
+                break;
+              case '1': item.state = '进行中'
+                break;
+              case '2': item.state = '撤销'
+                break;
+              case '3': item.state = '已完成'
+                break;
+            }
+          })
         })
       },
       orderSelectColumn(selection, row) {
