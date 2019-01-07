@@ -113,7 +113,9 @@
         <Row :gutter="10">
           <Col span="6">
           <FormItem label="主叫号码">
-            <Input v-model="formItem.calling_phone" placeholder="请输入"></Input>
+            <Input v-model="formItem.calling_phone" placeholder="请输入">
+              <Button slot="append" @click="telTo">拨出</Button>
+            </Input>
           </FormItem>
           </Col>
           <Col span="5">
@@ -123,7 +125,9 @@
           </Col>
           <Col span="6">
           <FormItem label="联系电话">
-            <Input v-model="formItem.phone" placeholder="请输入"></Input>
+            <Input v-model="formItem.phone" placeholder="请输入">
+              <Button slot="append" @click="telTo">拨出</Button>
+            </Input>
           </FormItem>
           </Col>
           <Col span="5">
@@ -278,7 +282,7 @@
       // 事故类型accident_types
       request({url: 'api/queryDic', method: 'post', params: { type: 'accident_types' }}).then(function(res) {
         self.accidentTypes = res.data.data
-        // console.log('事故类型', res.data.data)
+        console.log('事故类型', res.data.data)
       })
       // 事故等级accident_types
       request({url: 'api/queryDic', method: 'post', params: { type: 'accident' }}).then(function(res) {
@@ -322,6 +326,10 @@
       carClick(data) {
         const self = this
         console.log('carClick', data, self.carSelectArr)
+      },
+      // 拨出
+      telTo() {
+        console.log('拨出')
       }
     }
   }

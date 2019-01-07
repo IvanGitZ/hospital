@@ -45,6 +45,11 @@
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item d-md-down-none">
+        <!--<a class="nav-link navbar-toggler aside-menu-toggler"  @click="asideToggle">&#9776;</a>-->
+        <Button v-if="already" @click="postAlready" style="margin-right: 20px" type="primary">请求就绪</Button>
+        <Button v-if="!already" @click="postLayout" style="margin-right: 20px" type="error">请求离席</Button>
+      </li>
       <!--<li class="nav-item d-md-down-none">-->
         <!--<a class="nav-link" ><Icon type="android-notifications" size="20"></Icon><span class="badge badge-pill badge-danger">5</span></a>-->
       <!--</li>-->
@@ -89,7 +94,18 @@ export default {
   components: {
     navbar,
   },
+  data() {
+    return {
+      already: true
+    }
+  },
   methods: {
+    postAlready() {
+      this.already = false
+    },
+    postLayout() {
+      this.already = true
+    },
     Logout(e){
          e.preventDefault();
          this.$store.dispatch('LogOut').then(() => {
