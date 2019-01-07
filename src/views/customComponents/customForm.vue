@@ -206,16 +206,13 @@
           { title: '派车', key: 'toSubmit' }
         ],
         carData: [],
-        sexList: [
-          {
+        sexList: [{
             value: 'male',
             label: '男'
-          },
-          {
+          }, {
             value: 'female',
             label: '女'
-          }
-        ],
+        }],
         source: [], // 来源
         distress: [], // 呼救类型
         accidentTypes: [], // 事故类型
