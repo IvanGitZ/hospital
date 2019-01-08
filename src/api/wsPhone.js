@@ -63,7 +63,8 @@ export function demo() {
     },
     onCallArrive : function(coInfos) {
       // 进行弹屏处理
-      self.onCallArrive(coInfos);
+      console.log('弹屏处理', coInfos)
+      // self.onCallArrive(coInfos);
     },
     onPrepareDialSucc : function() {
       // 进行号码输入界面或者通讯录显示
@@ -98,7 +99,8 @@ export function demo() {
       self.onRefreshAgentListSucc(agentList);
     },
     onDevConnected : function() {
-      self.onDevConnected();
+      console.log('通话开始')
+      // self.onDevConnected();
     },
     onDevDisconnected : function() {
       self.onDevDisconnected();
