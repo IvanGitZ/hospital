@@ -87,9 +87,10 @@
         carTotal: '',
         // 工单
         orderSearch: '',
+        orderSelectArr: [],
         orderColumns: [
           { title: '工单号', key: 'orderNo', type: 'selection' },
-          { title: '状态', key: 'state' },
+          { title: '状态', key: 'stateName' },
           { title: '主叫电话', key: 'callingPhone'},
           { title: '工单来源', key: 'source' },
           { title: '调度员', key: 'userName' },
@@ -99,10 +100,10 @@
           { title: '目的地', key: 'addressSend'}
         ],
         orderBtnArr: [
-          { title: '唤醒待派', key: '唤醒待派' },
-          { title: '撤销待派', key: '撤销待派' },
-          { title: '增援', key: '增援'},
-          { title: '改派', key: '改派' },
+          { title: '唤醒待派', key: '12' },
+          { title: '撤销待派', key: '13' },
+          { title: '增援', key: '14'},
+          { title: '改派', key: '15' },
           { title: '电话相关', key: '电话相关' }
         ],
         orderData: [],
@@ -193,10 +194,10 @@
               params: params
             }).then(function(dutyRes){
               console.log('上下班', dutyRes)
-              self.carSelectArr = []
               self.getCarList()
             })
           })
+          self.carSelectArr = []
         } else {
           _.each(self.carSelectArr, function(item) {
             request({
@@ -205,10 +206,10 @@
               params: { id: item.id, state: data }
             }).then(function(res) {
               console.log('修改车辆信息', res)
-              self.carSelectArr = []
               self.getCarList()
             })
           })
+          self.carSelectArr = []
         }
 
       },
@@ -225,13 +226,13 @@
           self.orderTotal = res.data.total
           _.each(self.orderData, function(item) {
             switch (item.state) {
-              case '0': item.state = '挂起'
+              case '0': item.stateName = '挂起'
                 break;
-              case '1': item.state = '进行中'
+              case '1': item.stateName = '进行中'
                 break;
-              case '2': item.state = '撤销'
+              case '2': item.stateName = '撤销'
                 break;
-              case '3': item.state = '已完成'
+              case '3': item.stateName = '已完成'
                 break;
             }
           })
@@ -240,11 +241,22 @@
       orderSelectColumn(selection, row) {
         console.log(selection, row)
         const self = this
-        self.carSelectArr = _.cloneDeep(selection)
+        self.orderSelectArr = _.cloneDeep(selection)
       },
       orderClick(data) {
         const self = this
-        console.log('carClick', data, self.carSelectArr)
+        console.log('orderClick', data, self.orderSelectArr)
+        _.each(self.orderSelectArr, function(item){
+          request({
+            url: 'api/editOrder',
+            method: 'post',
+            params: { id: item.id, state: data }
+          }).then(function(orderRes){
+            console.log('工单状态修改返回值', orderRes)
+            self.getOrderList()
+          })
+        })
+        self.orderSelectArr = []
       }
     }
   }
