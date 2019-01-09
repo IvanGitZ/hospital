@@ -21,7 +21,7 @@
           </Col>
           <Col span="6">
           <FormItem label="事故类型" style="position: relative">
-            <Input v-model="formItem.accidentTypes" placeholder="请输入" @on-focus="accidentTypeFocus"></Input>
+            <Input v-model="accidentTypesData.name" placeholder="请输入" @on-focus="accidentTypeFocus"></Input>
             <div v-if="treeShow" class="accidentTypeTree">
               <Tree @on-select-change="selectChange" :data="accidentTypes"></Tree>
             </div>
@@ -225,6 +225,10 @@
         illness: [], // 病情
         ethnic: [], // 民族
         countries: [], // 国籍
+        accidentTypesData: {
+          name: '',
+          value: ''
+        }, // 事故类型
         formItem: {
           source: '',
           distressTypes: '',
@@ -344,6 +348,7 @@
           } else {
             self.formItem.carIds = ''
           }
+          self.formItem.accidentTypes = self.accidentTypesData.value
           self.formItem.state = '1' // 进行中状态
           request({
             url: 'api/addOrder',
@@ -363,7 +368,10 @@
       },
       selectChange(data) {
         console.log(data)
-        this.formItem.accidentTypes = data[0].value
+        this.accidentTypesData = {
+          name: data[0].name,
+          value: data[0].value
+        }
         this.treeShow = false
       }
     }

@@ -171,6 +171,7 @@
               params: { id: item.id, state: data }
             }).then(function(res) {
               console.log('修改车辆信息', res)
+              self.carSelectArr = []
               self.getCarList()
             })
           })
