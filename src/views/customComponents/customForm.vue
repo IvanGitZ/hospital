@@ -14,21 +14,25 @@
           </Col>
           <Col span="6">
           <FormItem label="呼救类型">
-            <Select v-model="formItem.distress_types">
+            <Select v-model="formItem.distressTypes">
               <Option v-for="item in distress" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
           </Col>
           <Col span="6">
-          <FormItem label="事故类型">
-            <Select v-model="formItem.accident_types">
-              <Option v-for="item in accidentTypes" :value="item.value" :key="item.value">{{item.name}}</Option>
-            </Select>
+          <FormItem label="事故类型" style="position: relative">
+            <Input v-model="formItem.accidentTypes" placeholder="请输入" @on-focus="accidentTypeFocus"></Input>
+            <div v-if="treeShow" class="accidentTypeTree">
+              <Tree @on-select-change="selectChange" :data="accidentTypes"></Tree>
+            </div>
+            <!--<Select v-model="formItem.accidentTypes">-->
+              <!--<Option v-for="item in accidentTypes" :value="item.value" :key="item.value">{{item.name}}</Option>-->
+            <!--</Select>-->
           </FormItem>
           </Col>
           <Col span="6">
           <FormItem label="事故等级">
-            <Select v-model="formItem.accident_level">
+            <Select v-model="formItem.accidentLevel">
               <Option v-for="item in accident" :value="item.value" :key="item.value">{{item.name}}</Option>
             </Select>
           </FormItem>
@@ -37,19 +41,19 @@
         <Row :gutter="10">
           <Col span="16">
           <FormItem label="现场地址">
-            <Input v-model="formItem.address_scene" placeholder="请输入"></Input>
+            <Input v-model="formItem.addressScene" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="8">
           <FormItem label="区域">
-            <Input v-model="formItem.address_area" placeholder="请输入"></Input>
+            <Input v-model="formItem.addressArea" placeholder="请输入"></Input>
           </FormItem>
           </Col>
         </Row>
         <Row :gutter="10">
           <Col span="16">
           <FormItem label="接车地址">
-            <Input v-model="formItem.address_destination" placeholder="请输入"></Input>
+            <Input v-model="formItem.addressDestination" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="8">
@@ -61,7 +65,7 @@
         <Row :gutter="10">
           <Col span="12">
           <FormItem label="送往地点">
-            <Input v-model="formItem.address_send" placeholder="请输入"></Input>
+            <Input v-model="formItem.addressSend" placeholder="请输入"></Input>
           </FormItem>
           </Col>
           <Col span="6">
@@ -113,7 +117,7 @@
         <Row :gutter="10">
           <Col span="6">
           <FormItem label="主叫号码">
-            <Input v-model="formItem.calling_phone" placeholder="请输入">
+            <Input v-model="formItem.callingPhone" placeholder="请输入">
               <Button slot="append" @click="telTo">拨出</Button>
             </Input>
           </FormItem>
@@ -182,6 +186,7 @@
     components: {},
     data () {
       return {
+        treeShow: false,
         // 车辆
         carSearch: '',
         carSelectArr: [],
@@ -202,7 +207,7 @@
           { title: '电话记录', key: '电话记录' },
           { title: '转电话', key: '转电话' },
           { title: '继续接听', key: '继续接听'},
-          { title: '代派', key: '代派' },
+          { title: '待派', key: 'waitSubmit' },
           { title: '派车', key: 'toSubmit' }
         ],
         carData: [],
@@ -222,14 +227,14 @@
         countries: [], // 国籍
         formItem: {
           source: '',
-          distress_types: '',
-          accident_types: '',
-          accident_level: '',
-          address_scene: '',
-          address_area: '',
-          address_destination: '',
+          distressTypes: '',
+          accidentTypes: '',
+          accidentLevel: '',
+          addressScene: '',
+          addressArea: '',
+          addressDestination: '',
           patients: '',
-          address_send: '',
+          addressSend: '',
           cc: '',
           illness: '',
           patientName: '',
@@ -237,14 +242,14 @@
           age: '',
           national: '',
           nationality: '',
-          calling_phone: '',
+          callingPhone: '',
           name: '',
           phone: '',
           extension: '',
           requirements: '',
           stretcher: '',
           remark: '',
-          carId: ''
+          carIds: ''
         }
       }
     },
@@ -261,12 +266,20 @@
         self.distress = res.data.data
         // console.log('呼救类型', res.data.data)
       })
-      // 事故类型accident_types
-      request({url: 'api/queryDic', method: 'post', params: { type: 'accident_types' }}).then(function(res) {
+      // 事故类型accidentTypes
+      request({url: 'api/queryDic', method: 'post', params: { type: 'accidentTypes' }}).then(function(res) {
         self.accidentTypes = res.data.data
+        _.each(self.accidentTypes, function(item){
+          item.title = item.name
+          if (item.children) {
+            _.each(item.children, function(it){
+              it.title = it.name
+            })
+          }
+        })
         console.log('事故类型', res.data.data)
       })
-      // 事故等级accident_types
+      // 事故等级accidentTypes
       request({url: 'api/queryDic', method: 'post', params: { type: 'accident' }}).then(function(res) {
         self.accident = res.data.data
         // console.log('事故等级', res.data.data)
@@ -327,10 +340,11 @@
             _.each(self.carSelectArr, function(item) {
               carArr.push(item.id)
             })
-            self.formItem.carId = carArr.join(',')
+            self.formItem.carIds = carArr.join(',')
           } else {
-            self.formItem.carId = ''
+            self.formItem.carIds = ''
           }
+          self.formItem.state = '1' // 进行中状态
           request({
             url: 'api/addOrder',
             method: 'post',
@@ -343,6 +357,14 @@
       // 拨出
       telTo() {
         console.log('拨出')
+      },
+      accidentTypeFocus() {
+        this.treeShow = true
+      },
+      selectChange(data) {
+        console.log(data)
+        this.formItem.accidentTypes = data[0].value
+        this.treeShow = false
       }
     }
   }
@@ -362,6 +384,16 @@
   }
   .titleRight {
     float: right;
+  }
+  .accidentTypeTree {
+    height: 170px;
+    min-width: 195px;
+    overflow:auto;
+    background-color: white;
+    position: absolute;
+    z-index: 100;
+    border: 1px solid #dddee1;
+    border-radius: 5px
   }
 </style>
 

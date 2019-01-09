@@ -7,7 +7,7 @@ import './login.js'
 import './ui.js'
 // import './api/wsPhone'
 import { demo } from './api/wsPhone'
-demo()
+// demo()
 Vue.config.productionTip = false;
 var vm=new Vue({
   el: '#app',
