@@ -65,7 +65,7 @@
           { title: '司机', key: 'driverName'},
           { title: '医生', key: 'doctorName' },
           { title: '护士', key: 'nurseName' },
-          { title: '状态', key: 'state'},
+          { title: '状态', key: 'stateName'},
           { title: '按键时间', key: 'siteName' },
           { title: '车况', key: 'vehicles' },
           { title: '随车电话', key: 'phone'},
@@ -141,13 +141,13 @@
           self.carTotal = res.data.total
           _.each(self.carData, function(item) {
             switch (item.state) {
-              case '0': item.state = '待命'
+              case '0': item.stateName = '待命'
                 break;
-              case '1': item.state = '任务中'
+              case '1': item.stateName = '任务中'
                 break;
-              case '2': item.state = '暂停'
+              case '2': item.stateName = '暂停'
                 break;
-              case '3': item.state = '下班'
+              case '3': item.stateName = '下班'
                 break;
             }
           })
@@ -163,6 +163,40 @@
         console.log('carClick', data, self.carSelectArr)
         if (data === 'change') {
           // 上下班
+          _.each(self.carSelectArr, function(item){
+            let params = {}
+            if (item.state === '0') {
+              // 待命中，可下班
+              params = {
+                state: '1',
+                carId: item.id,
+                driverId: item.driverId,
+                doctorId: item.doctorId,
+                nurseId: item.nurseId
+              }
+            } else if (item.state === '2' || item.state === '3') {
+              // 暂停或下班，可上班
+              params = {
+                state: '0',
+                carId: '',
+                driverId: '',
+                doctorId: '',
+                nurseId: ''
+              }
+            } else {
+              alert('进行中，不可下班')
+              return
+            }
+            request({
+              url: 'api/duty',
+              method: 'post',
+              params: params
+            }).then(function(dutyRes){
+              console.log('上下班', dutyRes)
+              self.carSelectArr = []
+              self.getCarList()
+            })
+          })
         } else {
           _.each(self.carSelectArr, function(item) {
             request({
