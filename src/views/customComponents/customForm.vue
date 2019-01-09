@@ -186,6 +186,7 @@
     components: {},
     data () {
       return {
+        customer: {}, // 顾客
         treeShow: false,
         // 车辆
         carSearch: '',
@@ -259,6 +260,19 @@
     },
     created() {
       const self = this
+      if (location.href.split('=').length > 1) {
+        const phone = location.href.split('=')[1]
+        request({url: 'api/queryCustomer', method: 'post', params: { phone: phone }}).then(function(customerRes){
+          console.log('客户信息', customerRes.data)
+          self.customer = customerRes.data.data.data
+          self.formItem.name = self.customer.name
+          self.formItem.sex = self.customer.sex
+          self.formItem.age = self.customer.age
+          self.formItem.phone = self.customer.phone
+          self.formItem.national = self.customer.national
+          self.formItem.nationality = self.customer.nationality
+        })
+      }
       this.getCarList()
       // 工单来源下拉
       request({url: 'api/queryDic', method: 'post', params: { type: 'source' }}).then(function(res) {
