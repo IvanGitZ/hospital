@@ -17,7 +17,7 @@
         </router-link> 
       </li>
       <li class="nav-item header-item">
-        <router-link tag="div" to='/charts'  style="height:55px;" class="nav-link">
+        <router-link tag="div" to='/phone'  style="height:55px;" class="nav-link">
             <p><Icon type="social-whatsapp" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 来电显示 </p>
         </router-link>

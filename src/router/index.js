@@ -49,6 +49,7 @@ export const asyncRouterMap = [
       { path: '/dashboard', name: 'Dashboard', icon: 'speedometer', component: _import('Dashboard') },
       { path: '/introduction', name: '介绍', icon: 'thumbsup', component: _import('Introduction') },
       { path: '/setting', name: '设置', icon: 'thumbsup', component: _import('setting') },
+      { path: '/phone', name: '电话', icon: 'thumbsup', component: _import('phone') },
       { path: '/custom',
         name: 'custom',
         redirect: '/custom/customForm',
