@@ -83,7 +83,9 @@ const user = {
       return new Promise((resolve, reject) => {
         LoginByUsername(userInfo.username, userInfo.password).then(response => {
           if (response.data.flag) {
+            console.log(userInfo)
             Cookies.set('Admin-Token', userInfo.username)
+            Cookies.set('id', response.data.data.data.id)
             commit('SET_TOKEN', userInfo.username)
             resolve()
           } else {

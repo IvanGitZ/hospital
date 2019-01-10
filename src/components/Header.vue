@@ -38,7 +38,7 @@
         </Dropdown>
       </li>
       <li class="nav-item header-item">
-         <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
+         <router-link tag="div" to='/setting'  style="height:55px;" class="nav-link">
             <p><Icon type="gear-b" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 设置 </p>
         </router-link>
