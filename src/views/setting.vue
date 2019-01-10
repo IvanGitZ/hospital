@@ -43,7 +43,6 @@
     methods: {
       sure() {
         const self = this
-        console.log(self.formItem, Cookies.get('id'))
         self.formItem.id = Cookies.get('id')
         delete self.formItem.againNewPwd
         request({ url: 'api/editPwd', method: 'post', params: self.formItem }).then(function(res) {
