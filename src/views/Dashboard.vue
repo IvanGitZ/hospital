@@ -16,7 +16,7 @@
                             </RadioGroup>
                         </div>
                     </div>
-                    <Table style="margin-bottom: 10px" @on-select="carSelectColumn" :columns="carColumns" :data="carData"></Table>
+                    <Table style="margin-bottom: 10px" @on-selection-change="carSelectColumn" :columns="carColumns" :data="carData"></Table>
                     <ButtonGroup>
                       <Button v-for="item in carBtnArr" @click="carClick(item.key)" :key="item.key">{{item.title}}</Button>
                     </ButtonGroup>
@@ -36,7 +36,7 @@
                             </RadioGroup>
                         </div>
                     </div>
-                    <Table style="margin-bottom: 10px" @on-select="orderSelectColumn" :columns="orderColumns" :data="orderData"></Table>
+                    <Table style="margin-bottom: 10px" @on-selection-change="orderSelectColumn" :columns="orderColumns" :data="orderData"></Table>
                     <ButtonGroup>
                       <Button v-for="item in orderBtnArr" @click="orderClick(item.key)" :key="item.key">{{item.title}}</Button>
                     </ButtonGroup>
@@ -46,6 +46,39 @@
               <customForm></customForm>
             </TabPane>
         </Tabs>
+        <!-- 上下班弹窗 -->
+        <Modal
+          v-model="changeModel"
+          title="选择上班人员"
+          @on-ok="changeOk"
+          @on-cancel="cancel">
+            <Form :model="formItem" :label-width="80">
+                <FormItem label="司机">
+                    <Select v-model="formItem.driverId">
+                        <Option v-for="item in driverArr" :value="item.id" :key="item.id">{{item.username}}</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="医生">
+                    <Select v-model="formItem.doctorId">
+                        <Option v-for="item in doctorArr" :value="item.id" :key="item.id">{{item.username}}</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="护士">
+                    <Select v-model="formItem.nurseId">
+                        <Option v-for="item in nurseArr" :value="item.id" :key="item.id">{{item.username}}</Option>
+                    </Select>
+                </FormItem>
+            </Form>
+        </Modal>
+        <!-- 上下班弹窗 -->
+        <Modal
+          width="70%"
+          v-model="changeCarModel"
+          title="选择车辆"
+          @on-ok="changeCarOk"
+          @on-cancel="cancel">
+            <Table style="margin-bottom: 10px" @on-selection-change="selectNewCar" :columns="carColumns" :data="readyCarData"></Table>
+        </Modal>
     </div>
 </template>
 <script>
@@ -56,6 +89,23 @@
     components: { customForm },
     data () {
       return {
+        // 工单修改的状态
+        orderChangeState: '',
+        readySelectCarArr: [],
+        // 待命的车辆
+        readyCarData: [],
+        // 员工表单
+        carId: '',
+        formItem: {
+          driverId: '',
+          doctorId: '',
+          nurseId: ''
+        },
+        driverArr: [],
+        doctorArr: [],
+        nurseArr: [],
+        changeModel: false, // 上下班弹窗
+        changeCarModel: false, // 增派改派弹窗
         // 车辆
         carSearch: '',
         carSelectArr: [],
@@ -114,6 +164,7 @@
       const self = this
       self.getCarList()
       self.getOrderList()
+      self.getUserList()
         // const self = this
         // const ws = new WebSocket("ws://aid.jdaoyun.com/ws")
         // ws.onopen = function() {
@@ -129,6 +180,19 @@
 
     },
     methods: {
+      // 员工信息查询
+      getUserList() {
+        const self = this
+        request({ url: 'api/queryUserList', method: 'post', params: { roleName: 'driver' } }).then(function(res){
+          self.driverArr = res.data.data.data
+        })
+        request({ url: 'api/queryUserList', method: 'post', params: { roleName: 'doctor' } }).then(function(res){
+          self.doctorArr = res.data.data.data
+        })
+        request({ url: 'api/queryUserList', method: 'post', params: { roleName: 'nurse' } }).then(function(res){
+          self.nurseArr = res.data.data.data
+        })
+      },
       // 车辆
       getCarList(value) {
         const self = this
@@ -154,15 +218,46 @@
           })
         })
       },
-      carSelectColumn(selection, row) {
-        console.log(selection, row)
+      getReadyCarList() {
+        const self = this
+        request({
+          url: 'api/queryCarList',
+          method: 'get',
+          params: { state: '0' }
+        }).then(function(res){
+          console.log('车辆信息返回值', res.data)
+          self.readyCarData = res.data.data.data
+          _.each(self.readyCarData, function(item) {
+            switch (item.state) {
+              case '0': item.stateName = '待命'
+                break;
+              case '1': item.stateName = '任务中'
+                break;
+              case '2': item.stateName = '暂停'
+                break;
+              case '3': item.stateName = '下班'
+                break;
+            }
+          })
+        })
+      },
+      carSelectColumn(selection) {
+        console.log(selection)
         const self = this
         self.carSelectArr = _.cloneDeep(selection)
       },
       carClick(data) {
         const self = this
+        if (self.carSelectArr.length < 1) {
+          this.$Message.info('请选择车辆')
+          return
+        }
         console.log('carClick', data, self.carSelectArr)
         if (data === 'change') {
+          if (self.carSelectArr.length > 1) {
+            this.$Message.info('请选择唯一的车辆进行调整')
+            return
+          }
           // 上下班
           _.each(self.carSelectArr, function(item){
             let params = {}
@@ -177,16 +272,12 @@
               }
             } else if (item.state === '2' || item.state === '3') {
               // 暂停或下班，可上班
-              params = {
-                state: '0',
-                carId: '',
-                driverId: '',
-                doctorId: '',
-                nurseId: ''
-              }
+              self.changeModel = true
+              self.carId = item.id
+              return false
             } else {
-              alert('进行中，不可下班')
-              return
+              alert('进行中，不可调整')
+              return false
             }
             request({
               url: 'api/duty',
@@ -211,7 +302,19 @@
           })
           self.carSelectArr = []
         }
-
+      },
+      changeOk() {
+        const self = this
+        const params = self.formItem
+        console.log(self.carSelectArr)
+        params.state = '0'
+        params.carId = self.carId
+        console.log('params', params)
+        request({ url: 'api/duty', method: 'post', params: params }).then(function(dutyRes){
+          console.log('上下班', dutyRes)
+          self.getCarList()
+          self.carSelectArr = []
+        })
       },
       // 工单
       getOrderList(value) {
@@ -238,13 +341,26 @@
           })
         })
       },
-      orderSelectColumn(selection, row) {
-        console.log(selection, row)
+      orderSelectColumn(selection) {
+        console.log(selection)
         const self = this
         self.orderSelectArr = _.cloneDeep(selection)
       },
       orderClick(data) {
         const self = this
+        if (self.orderSelectArr.length < 1) {
+          this.$Message.info('请选择工单')
+          return
+        } else if (self.orderSelectArr.length > 1) {
+          this.$Message.info('请选择唯一工单修改')
+          return
+        }
+        if (data === '14' || data === '15') {
+          self.changeCarModel = true
+          self.orderChangeState = data
+          self.getReadyCarList()
+          return
+        }
         console.log('orderClick', data, self.orderSelectArr)
         _.each(self.orderSelectArr, function(item){
           request({
@@ -257,6 +373,38 @@
           })
         })
         self.orderSelectArr = []
+      },
+      selectNewCar(data) {
+        console.log(data)
+        const self = this
+        self.readySelectCarArr = data
+      },
+      changeCarOk() {
+        const self = this
+        console.log('点击确定', self.orderSelectArr, self.orderChangeState, self.readySelectCarArr)
+        let carIds = ''
+        const carArr = []
+        if (self.readySelectCarArr.length >= 0) {
+          _.each(self.readySelectCarArr, function(item) {
+            carArr.push(item.id)
+          })
+          carIds = carArr.join(',')
+        } else {
+          this.$Message.info('请选择新添加的车辆')
+        }
+        request({
+          url: 'api/editOrder',
+          method: 'post',
+          params: { id: self.orderSelectArr[0].id, state: self.orderChangeState, carIds: carIds }
+        }).then(function(orderRes){
+          console.log('工单状态修改返回值', orderRes)
+          self.getOrderList()
+          self.getCarList()
+          self.readySelectCarArr = []
+        })
+      },
+      cancel() {
+        this.$Message.info('取消')
       }
     }
   }
