@@ -272,6 +272,11 @@
               }
             } else if (item.state === '2' || item.state === '3') {
               // 暂停或下班，可上班
+              self.formItem = {}
+              self.driverArr = []
+              self.doctorArr =  []
+              self.nurseArr =  []
+              self.getUserList()
               self.changeModel = true
               self.carId = item.id
               return false
@@ -288,7 +293,7 @@
               self.getCarList()
             })
           })
-          self.carSelectArr = []
+          // self.carSelectArr = []
         } else {
           _.each(self.carSelectArr, function(item) {
             request({
@@ -401,6 +406,7 @@
           self.getOrderList()
           self.getCarList()
           self.readySelectCarArr = []
+          self.readyCarData = []
         })
       },
       cancel() {
